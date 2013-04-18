@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<title>Document</title>
+<style type="text/css">
+*{font-size:12px;}
+#foodName{width:200px;height:20px;border:1px solid #ddd;padding:10px;margin:10px;}
+</style>
+</head>
+
+<body>
+<div id="foodName">选饭了。。</div>
+<input type="button" value="Go" onclick="food.start();" />
+<input type="button" value="停" onclick="food.stop();" />
+
+<script>
+	(function(win){
+		var Food = function(){
+			this.food = '卤肉饭,鸡排饭,牛肉饭,粥,烤鸭';
+			this.target = document.getElementById('foodName');
+			this.timer = null;
+		}
+		Food.prototype = {
+			start: function(){
+				var self = this;
+				self.stop();
+				self.timer = setInterval(function(){
+					self.change();
+				},30);
+			},
+			change: function(){
+				var arr = this.food.split(','),
+					n = arr.length-1,
+					random = arr[this.getRandom(n,0)];
+				this.target.innerHTML = random;
+			},
+			getRandom: function(max, min){
+				return parseInt(Math.random() * (max - min + 1));
+			},
+			stop: function(){
+				var self = this;
+				clearInterval(self.timer);
+			}
+		}
+
+		win.food = new Food();
+	}(this));
+</script>
+
+</body>
+</html>
